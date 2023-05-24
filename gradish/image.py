@@ -1,6 +1,7 @@
 import base64
 import cv2
 import io, os
+from google.cloud import vision_v1
 from google.cloud.vision_v1 import types
 import vertexai
 from vertexai.preview.language_models import TextGenerationModel
@@ -65,7 +66,6 @@ class Image:
     max_decode_steps: int,
     top_p: float,
     top_k: int,
-    content: str,
     location: str = "us-central1",
     tuned_model_name: str = "", 
     identification=bool, 

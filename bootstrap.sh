@@ -2,4 +2,4 @@
 
 
 export FLASK_APP=./gradish/index.py
-flask --app index run --debug
+flask --app gradish/index run --debug
