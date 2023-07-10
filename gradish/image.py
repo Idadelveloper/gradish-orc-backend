@@ -54,8 +54,28 @@ class Image:
         words = []
         for text in texts:
             words.append(text.description)
+        
+        grades = dict()
 
-        return words
+        for i in range(len(words)):
+            if words[i] == "NUMBER":
+                coded_number = words[i + 1]
+                cn_re = '[A-Za-z0-9]+'
+                grades['coded number'] = coded_number
+
+            if words[i] == "Total":
+                mark = words[i-1]
+                grades['mark'] = mark
+                break
+
+        if "mark" not in grades:
+            grades["mark"] = "0"
+
+        if "coded number" not in grades:
+            grades["coded number"] = "CO123"
+    
+
+        return grades
 
 
     def extract_info(self, 
