@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, request
 from gradish.image import Image
+import base64
 import os
 from dotenv import load_dotenv
 
@@ -12,6 +13,38 @@ load_dotenv()
 def hello_world():
     return "Hello, World!"
 
+
+@app.route('/upload', methods=['POST'])
+def upload_file():
+    print(request.data)
+    
+    uploaded_file = request.data
+    # Save the uploaded file to a new file in the root directory
+
+    with open('myimage', 'wb') as f:
+        # Write some bytes to the file
+        f.write(uploaded_file)
+
+    with open('myimage', 'rb') as f:
+        file_contents = f.read()  
+        
+        # Encode the binary data as base64
+        base64_string = base64.b64encode(file_contents).decode('utf-8')
+        
+        filename = "image"
+        service_account_path = os.getenv('SERVICE_ACCOUNT_PATH')
+
+        image = Image(base64_string, filename, service_account_path)
+
+        image_path = image.decode_bas64_string()
+        text = image.detect_handwriting(image_path)
+
+        data = {'detected': text}
+        print(data)
+
+        return jsonify(data), 200
+    
+    return 'File saved successfully', 200
 
 
 @app.route("/extract", methods=['POST'])

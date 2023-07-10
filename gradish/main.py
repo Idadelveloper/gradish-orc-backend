@@ -13,7 +13,6 @@ def hello_world():
     return "Hello, World!"
 
 
-
 @app.route("/extract", methods=['POST'])
 def extract_info():
     request_data = request.get_json()
