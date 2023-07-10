@@ -1,5 +1,5 @@
 import base64
-import cv2
+# import cv2
 import io, os
 from google.cloud import vision_v1
 from google.cloud.vision_v1 import types
