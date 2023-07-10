@@ -19,11 +19,13 @@ class Image:
     def decode_bas64_string(self):
         decoded = base64.b64decode((self.base64_string))
 
-        image_path = f"temp/{self.filename}.jpeg"
+        image_temp_path = f"temp"
+        if not os.path.exists(image_temp_path):
+            os.makedirs(image_temp_path)
 
-        image_file = open(image_path, "wb")
-        image_file.write(decoded)
-        image_file.close()
+        image_path = f"{image_temp_path}/{self.filename}"
+        with open(image_path, 'wb') as image_file:
+            image_file.write(decoded)
 
         return image_path
 

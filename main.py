@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request
 from gradish.image import Image
 import base64
 import os
+import uuid
 from dotenv import load_dotenv
 
 
@@ -31,7 +32,9 @@ def upload_file():
         # Encode the binary data as base64
         base64_string = base64.b64encode(file_contents).decode('utf-8')
         
-        filename = "image"
+        print(request.headers)
+        content_type = request.content_type.split("/")[1]
+        filename = f"_gradish_image_{uuid.uuid4()}.{content_type}"
         service_account_path = os.getenv('SERVICE_ACCOUNT_PATH')
 
         image = Image(base64_string, filename, service_account_path)
